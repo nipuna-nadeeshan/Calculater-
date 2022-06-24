@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Calculator</title>
+  <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
+  <style>
+
+    #display{
+      border: 2px solid black;
+      width: 400px;
+      height: 50px;
+      text-align: right;
+      font-size: 40px;
+      font-family:'Orbitron';
+    }
+
+    button{
+      width: 90px;
+      height: 45px;
+      margin: 5px;
+
+    }
+    #c{
+      margin-right: -307px;
+    }
+    
+  </style>
+</head>
+<body>
+  <center>
+    <div id="display">
+  <span></span>
+</div>
+<br>
+<button id="c" class="" onclick="clearDisplay()">C</button>
+<br>
+<button id="7" class="num">7</button>
+<button id="8" class="num">8</button>
+<button id="9" class="num">9</button>
+<button id="/" class="op">/</button>
+<br>
+
+<button id="4" class="num">4</button>
+<button id="5" class="num">5</button>
+<button id="6" class="num">6</button>
+<button id="x" class="op">x</button>
+<br>
+
+<button id="1" class="num">1</button>
+<button id="2" class="num">2</button>
+<button id="3" class="num">3</button>
+<button id="-" class="op">-</button>
+<br>
+
+<button id="0" class="num">0</button>
+<button id="." class="dot" onclick="setDot()">.</button>
+<button id="=" class="eq" onclick="finalize()">=</button>
+<button id="+" class="op">+</button>
+<br>
+
+<script>
+  var opInserted = false;
+  var typingStarted = false;
+  var display = document.getElementById("display");
+  var numberArray = document.getElementsByClassName("num");
+  var opArray = document.getElementsByClassName("op");
+  var first;
+  var second;
+  var ans;
+  var operator;
+  
+  var i;
+  for(i=0;i<numberArray.length;i++){
+    numberArray[i].setAttribute("onclick","setDisplay("+numberArray[i].innerHTML+")");    
+  };
+  for(i=0;i<opArray.length;i++){
+    opArray[i].setAttribute("onclick","setOperator('"+opArray[i].innerHTML+"')");
+  }
+  function setOperator(op){    
+    var i;
+    for(i=0;i<opArray.length;i++){
+      opArray[i].style.background = "";
+    }
+    if(second == undefined){
+      first = display.innerHTML;
+      clearDisplay();
+    }
+    else{
+      first = ans;
+      finalize();
+    }
+
+    
+    operator = op;
+    document.getElementById(op).style.background = "green";
+  }
+  function setDisplay(number){
+    if(opInserted){
+
+    }else if(typingStarted){
+      display.innerHTML += number;      
+    }
+    else{
+      display.innerHTML = number;
+      typingStarted = true;
+    }
+  }
+  
+  function clearDisplay(){
+    display.innerHTML = 0;
+    typingStarted = false;
+    
+  }
+
+  function setDot(){    
+    display.innerHTML += ".";
+    typingStarted = true;  
+  }
+  function finalize(){
+    second = display.innerHTML;
+    switch(operator){
+      case "+":ans = parseFloat(first) + parseFloat(second);break;
+      case "-":ans = parseFloat(first) - parseFloat(second);break;
+      case "/":ans = parseFloat(first) / parseFloat(second);break;
+      case "x":ans = parseFloat(first) * parseFloat(second);break;
+    }
+    display.innerHTML = ans;
+    typingStarted = false;    
+  }
+  clearDisplay();
+  
+</script>
+
+
+</center>
+</body>
+</html>
